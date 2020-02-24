@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {FunctionComponent} from 'react';
+import { Provider } from 'react-redux';
+import createStore from './store';
+import ServicesList from './components/ServicesList/index';
 import './App.css';
+
+const store = createStore();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Provider store={store}>
+          <ServicesList />
+      </Provider>
   );
 }
 
 export default App;
+
+
+
+// import Router from './components/Router';
+// import { BrowserRouter } from 'react-router-dom';
+
+//
+// class App extends Component {
+//     render() {
+//         return (
+//             <BrowserRouter>
+//                 <Provider store={store}>
+//                     <Router />
+//                 </Provider>
+//             </BrowserRouter>
+//         );
+//     }
+// }

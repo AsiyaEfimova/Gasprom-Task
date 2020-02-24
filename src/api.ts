@@ -2,12 +2,12 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:7070/api';
 
-interface IServicesList {
+export interface IServicesList {
     id: string,
     name: string,
     price: number
 }
-interface IServicesItem {
+export interface IServicesItem {
     id: string,
     name: string,
     price: number,
