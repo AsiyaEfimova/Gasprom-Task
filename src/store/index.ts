@@ -1,7 +1,8 @@
-import { createStore, compose, applyMiddleware } from 'redux';
-import servicesListReducer from '../modules/servicesList';
+import {createStore, compose, applyMiddleware, combineReducers} from 'redux';
 import createSagaMiddleWare from 'redux-saga';
 import { rootSaga } from '../modules/rootSaga';
+import ListReducer from '../modules/servicesList';
+import DetailReducer from '../modules/serviceDetail';
 
 const sagaMiddleware = createSagaMiddleWare();
 
@@ -13,15 +14,24 @@ declare global {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
-    servicesList: [],
-    serviceDetail:null,
-    isLoading:false,
-    error:null
+    DetailReducer: {
+        serviceDetail:null,
+        isLoading:false,
+        error:null
+    },
+    ListReducer: {
+        servicesList: [],
+        isLoading:false,
+        error:null
+    }
 };
 
 const createServicesStore = () => {
     const store = createStore(
-        servicesListReducer,
+        combineReducers({
+            ListReducer,
+            DetailReducer
+        }),
         initialState,
         compose(
             applyMiddleware(sagaMiddleware),

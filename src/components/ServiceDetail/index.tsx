@@ -1,47 +1,60 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import {
-    fetchServiceListRequest,
-    getServicesList,
+    fetchServiceDetailRequest,
+    getServiceDetail,
     getIsLoading,
     getError
-} from '../../modules/servicesList';
+} from '../../modules/serviceDetail';
 import {IServicesItem} from '../../api';
 import Loader from '../Loader';
 import ErrorMessage from '../ErrorMessage';
 
 interface IState {
-    serviceItem: IServicesItem[]
+    serviceItem: IServicesItem
 }
 
 const ServiceDetail: React.FunctionComponent = () => {
-    let initialState:IState = {serviceItem : []};
+    let initialState:IState = {serviceItem : {
+        id: '',
+        name: '',
+        price: 0,
+        content: ''
+    }};
 
-    // const [services, setServices] = React.useState(initialState);
-    //
-    // const dispatch = Redux.useDispatch();
-    //
-    // const isLoading:boolean = Redux.useSelector(getIsLoading),
-    //     error = Redux.useSelector(getError),
-    //     servicesList = Redux.useSelector(getServicesList);
-    //
-    // React.useEffect(()=>{
-    //     dispatch(fetchServiceListRequest());
-    // },[dispatch]);
-    //
-    // React.useEffect(() => {
-    //     setServices({...services, serviceItem: servicesList});
-    // },[dispatch, servicesList]);
-    //
-    // const repeatRequest = () => {
-    //     dispatch(fetchServiceListRequest());
-    // };
+    const [service, setService] = React.useState(initialState);
+
+    const dispatch = Redux.useDispatch();
+
+    const isLoading:boolean = Redux.useSelector(getIsLoading),
+        error = Redux.useSelector(getError),
+        serviceInfo = Redux.useSelector(getServiceDetail);
+
+    React.useEffect(()=>{
+        dispatch(fetchServiceDetailRequest('f5135880-5799-11ea-820f-8d943f993c8b'));
+    },[dispatch]);
+
+    React.useEffect(() => {
+        if(serviceInfo!==null) {
+            setService({...service, serviceItem: serviceInfo});
+        }
+    },[dispatch, serviceInfo]);
+
+    const repeatRequest = () => {
+        dispatch(fetchServiceDetailRequest());
+    };
 
     return (
         <>
-            <div>Детальная страница</div>
-            {/*<Loader isLoading={isLoading}/>*/}
-            {/*<ErrorMessage error={error} clickHandler={repeatRequest}/>*/}
+            <h1>{service.serviceItem.name}</h1>
+            <ul>
+                <li>ID: {service.serviceItem.id}</li>
+                <li>Название: {service.serviceItem.name}</li>
+                <li>Цена: {service.serviceItem.price}</li>
+                <li>Описание: {service.serviceItem.content}</li>
+            </ul>
+            <Loader isLoading={isLoading}/>
+            <ErrorMessage error={error} clickHandler={repeatRequest}/>
         </>
     );
 };

@@ -2,20 +2,16 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 import {fetchServiceListRequest, fetchServiceListSuccess, fetchServiceListFailure} from './actions';
 
-const servicesList = handleActions({
+export const servicesList = handleActions({
     [fetchServiceListRequest.toString()]: () => [],
     [fetchServiceListSuccess.toString()]: (_state, action) => action.payload
 }, []);
-const serviceDetail = handleActions({
-    [fetchServiceListRequest.toString()]: () => null,
-    [fetchServiceListSuccess.toString()]: (_state, action) => action.payload
-}, null);
-const isLoading = handleActions({
+export const isLoading = handleActions({
     [fetchServiceListRequest.toString()]: ():boolean => true,
     [fetchServiceListSuccess.toString()]: ():boolean => false,
     [fetchServiceListFailure.toString()]: ():boolean => false
 }, false);
-const error = handleActions({
+export const error = handleActions({
     [fetchServiceListRequest.toString()]: () => null,
     [fetchServiceListFailure.toString()]: (_state, action) => {
         console.log(action.payload);
@@ -25,7 +21,6 @@ const error = handleActions({
 
 export default combineReducers({
     servicesList,
-    serviceDetail,
     isLoading,
     error
 });
