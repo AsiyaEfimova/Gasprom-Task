@@ -17,7 +17,10 @@ const isLoading = handleActions({
 }, false);
 const error = handleActions({
     [fetchServiceListRequest.toString()]: () => null,
-    [fetchServiceListFailure.toString()]: (_state, action) => action.payload
+    [fetchServiceListFailure.toString()]: (_state, action) => {
+        console.log(action.payload);
+        return action.payload;
+    }
 }, null);
 
 export default combineReducers({

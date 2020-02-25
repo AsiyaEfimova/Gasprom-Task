@@ -22,7 +22,7 @@ const ServicesList: React.FunctionComponent = () => {
     const dispatch = Redux.useDispatch();
 
     const isLoading:boolean = Redux.useSelector(getIsLoading),
-        error:string = Redux.useSelector(getError),
+        error = Redux.useSelector(getError),
         servicesList = Redux.useSelector(getServicesList);
 
     React.useEffect(()=>{
@@ -33,6 +33,10 @@ const ServicesList: React.FunctionComponent = () => {
         setServices({...services, serviceList: servicesList});
     },[dispatch, servicesList]);
 
+    const repeatRequest = () => {
+        dispatch(fetchServiceListRequest());
+    };
+
     return (
         <>
             <ul>
@@ -41,7 +45,7 @@ const ServicesList: React.FunctionComponent = () => {
                 ))}
             </ul>
             <Loader isLoading={isLoading}/>
-            <ErrorMessage error={error}/>
+            <ErrorMessage error={error} clickHandler={repeatRequest}/>
         </>
     );
 };
