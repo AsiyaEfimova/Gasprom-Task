@@ -42,7 +42,10 @@ const ServicesList: React.FunctionComponent = () => {
         <>
             <ul>
                 {services.serviceList.map(service => (
-                    <li key={service.id}><Link to={`/${service.id}/details`}>{service.name}: {service.price}</Link></li>
+                    <li key={service.id}><Link to={{
+                        pathname: `/${service.id}/details`,
+                        state: {id: service.id}
+                    }}>{service.name}: {service.price}</Link></li>
                 ))}
             </ul>
             <Loader isLoading={isLoading}/>

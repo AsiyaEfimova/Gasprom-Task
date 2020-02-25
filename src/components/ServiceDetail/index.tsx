@@ -14,9 +14,9 @@ interface IState {
     serviceItem: IServicesItem
 }
 
-const ServiceDetail: React.FunctionComponent = () => {
+const ServiceDetail: React.FunctionComponent = (props:any) => {
     let initialState:IState = {serviceItem : {
-        id: '',
+        id: props.match.params.id,
         name: '',
         price: 0,
         content: ''
@@ -31,8 +31,8 @@ const ServiceDetail: React.FunctionComponent = () => {
         serviceInfo = Redux.useSelector(getServiceDetail);
 
     React.useEffect(()=>{
-        dispatch(fetchServiceDetailRequest('f5135880-5799-11ea-820f-8d943f993c8b'));
-    },[dispatch]);
+        dispatch(fetchServiceDetailRequest(service.serviceItem.id));
+    },[dispatch, service.serviceItem.id]);
 
     React.useEffect(() => {
         if(serviceInfo!==null) {
@@ -41,18 +41,20 @@ const ServiceDetail: React.FunctionComponent = () => {
     },[dispatch, serviceInfo]);
 
     const repeatRequest = () => {
-        dispatch(fetchServiceDetailRequest());
+        dispatch(fetchServiceDetailRequest(service.serviceItem.id));
     };
 
     return (
         <>
             <h1>{service.serviceItem.name}</h1>
-            <ul>
-                <li>ID: {service.serviceItem.id}</li>
-                <li>Название: {service.serviceItem.name}</li>
-                <li>Цена: {service.serviceItem.price}</li>
-                <li>Описание: {service.serviceItem.content}</li>
-            </ul>
+            {!error && !isLoading && (
+                <ul>
+                    <li>ID: {service.serviceItem.id}</li>
+                    <li>Название: {service.serviceItem.name}</li>
+                    <li>Цена: {service.serviceItem.price}</li>
+                    <li>Описание: {service.serviceItem.content}</li>
+                </ul>
+            )}
             <Loader isLoading={isLoading}/>
             <ErrorMessage error={error} clickHandler={repeatRequest}/>
         </>
