@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
+import { Link } from "react-router-dom";
 import {
     fetchServiceListRequest,
     getServicesList,
@@ -41,7 +42,7 @@ const ServicesList: React.FunctionComponent = () => {
         <>
             <ul>
                 {services.serviceList.map(service => (
-                    <li key={service.id}>{service.name}: {service.price}</li>
+                    <li key={service.id}><Link to={`/${service.id}/details`}>{service.name}: {service.price}</Link></li>
                 ))}
             </ul>
             <Loader isLoading={isLoading}/>
