@@ -16,7 +16,7 @@ interface IState {
 
 const ServiceDetail: React.FunctionComponent = (props:any) => {
     let initialState:IState = {serviceItem : {
-        id: props.match.params.id,
+        id: '',
         name: '',
         price: 0,
         content: ''
@@ -31,8 +31,8 @@ const ServiceDetail: React.FunctionComponent = (props:any) => {
         serviceInfo = Redux.useSelector(getServiceDetail);
 
     React.useEffect(()=>{
-        dispatch(fetchServiceDetailRequest(service.serviceItem.id));
-    },[dispatch, service.serviceItem.id]);
+        dispatch(fetchServiceDetailRequest(props.match.params.id));
+    },[dispatch]);
 
     React.useEffect(() => {
         if(serviceInfo!==null) {
